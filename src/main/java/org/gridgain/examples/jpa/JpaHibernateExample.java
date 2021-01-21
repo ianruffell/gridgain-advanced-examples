@@ -21,16 +21,21 @@
 
 package org.gridgain.examples.jpa;
 
-import org.apache.ignite.*;
-import org.hibernate.*;
-import org.hibernate.cache.spi.access.AccessType;
-import org.hibernate.cfg.*;
-import org.hibernate.service.*;
-import org.hibernate.stat.*;
+import java.io.File;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import org.apache.ignite.Ignite;
+import org.apache.ignite.Ignition;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cache.spi.access.AccessType;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.stat.SecondLevelCacheStatistics;
 
 /**
  * This example demonstrates the use of GridGain In-Memory Data Grid as a Hibernate
@@ -199,14 +204,14 @@ public class JpaHibernateExample {
      * @return New Hibernate {@link SessionFactory}.
      */
     private static SessionFactory createHibernateSessionFactory(URL hibernateCfg) {
-        ServiceRegistryBuilder builder = new ServiceRegistryBuilder();
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
 
         builder.applySetting("hibernate.connection.url", JDBC_URL);
         builder.applySetting("hibernate.show_sql", true);
 
         return new Configuration()
             .configure(hibernateCfg)
-            .buildSessionFactory(builder.buildServiceRegistry());
+            .buildSessionFactory(builder.build());
     }
 
     /**

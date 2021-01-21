@@ -108,7 +108,7 @@ public final class CacheAffinityExample {
             keys.add(i);
 
         // Map all keys to nodes.
-        Map<ClusterNode, Collection<Integer>> mappings = ignite.cluster().mapKeysToNodes(CACHE_NAME, keys);
+        Map<ClusterNode, Collection<Integer>> mappings =  ignite.<Integer>affinity(CACHE_NAME).mapKeysToNodes(keys);
 
         for (Map.Entry<ClusterNode, Collection<Integer>> mapping : mappings.entrySet()) {
             ClusterNode node = mapping.getKey();

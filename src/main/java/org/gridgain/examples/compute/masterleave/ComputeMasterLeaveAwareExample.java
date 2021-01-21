@@ -117,9 +117,11 @@ public class ComputeMasterLeaveAwareExample {
      */
     @ComputeTaskSessionFullSupport
     private static class MasterLeaveAwareTask extends ComputeTaskSplitAdapter<Long, String> {
-        /** {@inheritDoc} */
+		private static final long serialVersionUID = 1L;
+
+		/** {@inheritDoc} */
         @Override protected Collection<? extends ComputeJob> split(int nodesCnt, Long ttl) throws IgniteException {
-            ArrayList<MasterLeaveAwareJob> list = new ArrayList(nodesCnt);
+            ArrayList<MasterLeaveAwareJob> list = new ArrayList<MasterLeaveAwareJob>(nodesCnt);
 
             for (int i = 0; i < nodesCnt; i++)
                 list.add(new MasterLeaveAwareJob(ttl));
@@ -132,14 +134,16 @@ public class ComputeMasterLeaveAwareExample {
             StringBuilder builder = new StringBuilder();
 
             for (ComputeJobResult result: list)
-                builder.append(result.getData()).append(" ");
+                builder.append(result.getData().toString()).append(" ");
 
             return builder.toString();
         }
     }
 
     private static class MasterLeaveAwareJob implements ComputeJob, ComputeJobMasterLeaveAware {
-        /** Counter value. */
+		private static final long serialVersionUID = 1L;
+
+		/** Counter value. */
         private long cnt;
 
         /** Job execution time. */

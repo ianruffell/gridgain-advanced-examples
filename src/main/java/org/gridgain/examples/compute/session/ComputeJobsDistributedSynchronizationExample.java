@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCompute;
 import org.apache.ignite.IgniteException;
@@ -81,7 +82,8 @@ public class ComputeJobsDistributedSynchronizationExample {
      */
     @ComputeTaskSessionFullSupport
     private static class SimpleTask extends ComputeTaskAdapter<SimpleJob, String> {
-        /** */
+		private static final long serialVersionUID = 1L;
+		/** */
         @TaskSessionResource
         private ComputeTaskSession session;
 
@@ -107,7 +109,7 @@ public class ComputeJobsDistributedSynchronizationExample {
             StringBuilder builder = new StringBuilder("Result: ");
 
             for (ComputeJobResult res : list)
-                builder.append(res.getData()).append(" ");
+                builder.append(res.getData().toString()).append(" ");
 
             return builder.toString();
         }

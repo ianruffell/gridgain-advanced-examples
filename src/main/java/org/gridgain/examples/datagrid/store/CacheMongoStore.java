@@ -21,21 +21,32 @@
 
 package org.gridgain.examples.datagrid.store;
 
-import com.google.code.morphia.*;
-import com.mongodb.*;
-import de.flapdoodle.embed.mongo.*;
-import de.flapdoodle.embed.mongo.config.*;
-import de.flapdoodle.embed.mongo.distribution.*;
-import de.flapdoodle.embed.process.runtime.*;
-import org.apache.ignite.*;
-import org.apache.ignite.cache.store.*;
-import org.apache.ignite.lifecycle.*;
-import org.apache.ignite.resources.*;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.cache.*;
-import javax.cache.integration.*;
-import java.io.*;
-import java.util.*;
+import javax.cache.Cache;
+import javax.cache.integration.CacheLoaderException;
+import javax.cache.integration.CacheWriterException;
+
+import org.apache.ignite.IgniteException;
+import org.apache.ignite.IgniteLogger;
+import org.apache.ignite.cache.store.CacheStoreAdapter;
+import org.apache.ignite.lifecycle.LifecycleAware;
+import org.apache.ignite.resources.LoggerResource;
+
+import com.google.code.morphia.Datastore;
+import com.google.code.morphia.Morphia;
+import com.mongodb.MongoClient;
+
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.IMongodConfig;
+import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
+import de.flapdoodle.embed.mongo.config.Net;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.Network;
 
 /**
  * Sample MongoDB embedded cache store.
